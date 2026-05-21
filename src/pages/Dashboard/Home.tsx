@@ -1,5 +1,4 @@
 import ComponentCard from "../../components/common/ComponentCard";
-import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
 import BasicTableOne from "../../components/tables/BasicTables/BasicTableOne";
 
@@ -11,7 +10,6 @@ export default function Home() {
         description="This is React.js Ecommerce Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
       />
 
-      <PageBreadcrumb pageTitle="19 de mayo del 2026" />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
 
         <div className="col-span-12">

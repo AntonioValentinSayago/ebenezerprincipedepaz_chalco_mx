@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDateFormat } from '../../utils/getDateFormat';
 
 interface ComponentCardProps {
   title: string;
@@ -24,7 +25,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
       <div className="px-6 py-5">
         {/* Contenedor Flex para alinear Título (Izquierda) y Herramientas (Derecha) */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          
+
           {/* Bloque del Título */}
           <div>
             <h3 className="text-base font-medium text-gray-800 dark:text-white/90">
@@ -37,6 +38,17 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
             )}
           </div>
 
+          {/* Bloque de Herramientas: Buscador + Botones */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Buscador */}
+            <h2
+              className="text-xl font-semibold text-gray-800 dark:text-white/90"
+              x-text="pageName"
+            >
+              {getDateFormat(new Date())}
+            </h2>
+
+          </div>
 
         </div>
       </div>
