@@ -73,7 +73,14 @@ export default function BasicTableOne() {
     );
   }, [filteredMembers, currentPage]);
 
-  if (isLoading) return "Cargando...";
+  if (isLoading) return (
+    <Alert
+      variant="info"
+      title="Cargando datos..."
+      message="Esto puede demorar un momento."
+      showLink={false}
+    />
+  );
 
   if (isError)
     return (
@@ -84,9 +91,6 @@ export default function BasicTableOne() {
         showLink={false}
       />
     );
-
-
-
 
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -125,7 +129,7 @@ export default function BasicTableOne() {
 
           {/* PDF */}
           <button
-            onClick={(e) => console.log(e.target)}
+            onClick={() => alert('No se ha implementado la función de descarga.')}
             title="Descargar PDF"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
           >
@@ -147,7 +151,7 @@ export default function BasicTableOne() {
 
           {/* Excel */}
           <button
-            onClick={(e) => console.log(e.target)}
+            onClick={() => alert('No se ha implementado la función de descarga.')}
             title="Descargar Excel"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-green-500/10 dark:text-green-400 dark:hover:bg-green-500/20"
           >
@@ -176,49 +180,7 @@ export default function BasicTableOne() {
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
               >
-                Nombre Completo
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Edad
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Género
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Estado Civil
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Ocupación
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Teléfono
-              </TableCell>
-
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
-                Correo
+                Datos Completos
               </TableCell>
 
               <TableCell
@@ -264,39 +226,12 @@ export default function BasicTableOne() {
                     </span>
 
                     <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                      {member.nivel_academico}
+                      {member.correo} / {member.telefono} / Edad: {member.edad}
+                    </span>
+                    <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
+                      {member.nivel_academico} / E. Civil: {member.estado_civil} / Ocupación: {member.ocupacion}
                     </span>
                   </div>
-                </TableCell>
-
-                {/* Edad */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.edad} años
-                </TableCell>
-
-                {/* Género */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.genero}
-                </TableCell>
-
-                {/* Estado civil */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.estado_civil}
-                </TableCell>
-
-                {/* Ocupación */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.ocupacion}
-                </TableCell>
-
-                {/* Teléfono */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.telefono}
-                </TableCell>
-
-                {/* Correo */}
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm">
-                  {member.correo}
                 </TableCell>
 
                 {/* Bautizado */}
