@@ -104,6 +104,35 @@ export default function BasicTableOne() {
       />
     );
 
+  const getVisiblePages = () => {
+    const pages: (number | string)[] = [];
+
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    pages.push(1);
+
+    const startPage = Math.max(2, currentPage - 2);
+    const endPage = Math.min(totalPages - 1, currentPage + 2);
+
+    if (startPage > 2) {
+      pages.push("...");
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    if (endPage < totalPages - 1) {
+      pages.push("...");
+    }
+
+    pages.push(totalPages);
+
+    return pages;
+  };
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -141,7 +170,7 @@ export default function BasicTableOne() {
 
           {/* PDF */}
           <button
-            onClick={() => alert('No se ha implementado la función de descarga.')}
+            onClick={() => toast.error('No se ha implementado la función de descarga.')}
             title="Descargar PDF"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
           >
@@ -163,7 +192,7 @@ export default function BasicTableOne() {
 
           {/* Excel */}
           <button
-            onClick={() => alert('No se ha implementado la función de descarga.')}
+            onClick={() => toast.error('No se ha implementado la función de descarga.')}
             title="Descargar Excel"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-green-500/10 dark:text-green-400 dark:hover:bg-green-500/20"
           >
@@ -354,18 +383,27 @@ export default function BasicTableOne() {
               Anterior
             </button>
 
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index + 1)}
-                className={`px-3 py-1 text-sm rounded-lg border ${currentPage === index + 1
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "border-gray-300"
-                  }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+            {getVisiblePages().map((page, index) =>
+              page === "..." ? (
+                <span
+                  key={`ellipsis-${index}`}
+                  className="px-2 text-gray-500"
+                >
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(Number(page))}
+                  className={`px-3 py-1 text-sm rounded-lg border ${currentPage === page
+                      ? "bg-blue-600 text-white border-blue-600"
+                      : "border-gray-300"
+                    }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
 
             <button
               disabled={currentPage === totalPages}
@@ -426,11 +464,6 @@ export default function BasicTableOne() {
             </div>
           </div>
         )}
-        <button
-          onClick={() => toast.success('Hola')}
-        >
-          Deshabilitar
-        </button>
       </div>
     </div>
   );
