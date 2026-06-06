@@ -23,3 +23,29 @@ export type UsuarioAPI = {
     ministerios_json: string[];
     cobertura: boolean;
 };
+
+export interface Member {
+  id: number;
+  nombres: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  edad: number;
+  curp: string;
+  fecha_nacimiento: string;
+  bautizado: boolean;
+  nivel_academico: string;
+  fecha_conversion: string;
+  ocupacion: string;
+  cursos: string[];
+  iglesia_anterior: string;
+  razon_salida: string;
+  talentos_json: string[];
+  correo: string;
+  telefono: string;
+  tipo_sangre: string;
+  estado_civil: string;
+  genero: string;
+  created_at: string;
+  ministerios_json: string[];
+  cobertura: boolean;
+}

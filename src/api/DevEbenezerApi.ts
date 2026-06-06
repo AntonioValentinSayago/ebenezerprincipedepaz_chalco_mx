@@ -12,3 +12,14 @@ export async function getUserEbenezer () {
         }
     }
 }
+
+export async function updateUserEbenezer (memberId: number) {
+    try {
+        const { data } = await api.patch<UsuarioAPI>(`/ebenezer/member/${memberId}/toggle-coverage`)
+        return data;
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message);
+        }
+    }
+}

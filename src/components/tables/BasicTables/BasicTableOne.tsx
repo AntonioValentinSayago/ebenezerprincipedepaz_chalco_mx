@@ -1,39 +1,22 @@
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getUserEbenezer } from "../../../api/DevEbenezerApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserEbenezer, updateUserEbenezer } from "../../../api/DevEbenezerApi";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../ui/table";
 import Badge from "../../ui/badge/Badge";
 import Alert from "../../ui/alert/Alert";
-
-interface Member {
-  id: number;
-  nombres: string;
-  apellido_paterno: string;
-  apellido_materno: string;
-  edad: number;
-  curp: string;
-  fecha_nacimiento: string;
-  bautizado: boolean;
-  nivel_academico: string;
-  fecha_conversion: string;
-  ocupacion: string;
-  cursos: string[];
-  iglesia_anterior: string;
-  razon_salida: string;
-  talentos_json: string[];
-  correo: string;
-  telefono: string;
-  tipo_sangre: string;
-  estado_civil: string;
-  genero: string;
-  created_at: string;
-  ministerios_json: string[];
-  cobertura: boolean;
-}
+import { BoxIconLine, TrashBinIcon } from "../../../icons";
+import { Member } from "../../../types/UserEbenzer";
+import toast from "react-hot-toast";
 
 export default function BasicTableOne() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Configruacion de la Modal de Confirmación
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+
+  const queryClient = useQueryClient();
 
   const recordsPerPage = 10;
 
@@ -46,6 +29,37 @@ export default function BasicTableOne() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
   const members: Member[] = (data as any)?.data || [];
+
+  // Función para eliminar miembro
+  const toggleCoverageMutation = useMutation({
+    mutationFn: (memberId: number) => updateUserEbenezer(memberId),
+    onSuccess: () => {
+      toast.success("Cobertura actualizada exitosamente.");
+      queryClient.invalidateQueries({
+        queryKey: ["userEbenezer"],
+      });
+
+      setShowDeleteModal(false);
+      setSelectedMember(null);
+    },
+
+    onError: () => {
+      toast.error("Error al actualizar la cobertura. Inténtalo de nuevo.");
+    }
+
+  });
+
+  // Mostar Modal de Confirmación para eliminar Member
+  const handleDisableMember = (member: Member) => {
+    setSelectedMember(member);
+    setShowDeleteModal(true);
+  }
+
+  // Confirmar eliminación de Member
+  const confirmDisableMember = () => {
+    if (!selectedMember) return;
+    toggleCoverageMutation.mutate(selectedMember.id);
+  }
 
   // Filtro búsqueda
   const filteredMembers = useMemo(() => {
@@ -61,8 +75,6 @@ export default function BasicTableOne() {
     });
   }, [members, search]);
 
-
-  // Paginación
   const totalPages = Math.ceil(filteredMembers.length / recordsPerPage);
 
   const paginatedMembers = useMemo(() => {
@@ -210,15 +222,33 @@ export default function BasicTableOne() {
               >
                 Cobertura
               </TableCell>
+              <TableCell
+                isHeader
+                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
+              >
+                Acciones
+              </TableCell>
             </TableRow>
           </TableHeader>
 
           {/* BODY */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {paginatedMembers.map((member) => (
-              <TableRow key={member.id}>
+              <TableRow
+                key={member.id}
+                className={
+                  !member.cobertura
+                    ? "bg-red-50 dark:bg-red-500/10"
+                    : ""
+                }
+              >
                 {/* Nombre */}
-                <TableCell className="px-5 py-4 text-start">
+                <TableCell
+                  className={`px-5 py-4 text-start ${!member.cobertura
+                    ? "text-red-700 dark:text-red-300"
+                    : ""
+                    }`}
+                >
                   <div>
                     <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                       {member.nombres} {member.apellido_paterno}{" "}
@@ -281,6 +311,22 @@ export default function BasicTableOne() {
                     {member.cobertura ? "Activa" : "No"}
                   </Badge>
                 </TableCell>
+
+                {/* Acciones */}
+                <TableCell className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <button className="p-2 text-blue-500 hover:bg-blue-100 dark:hover:bg-white/10 rounded-lg">
+                      <BoxIconLine />
+                    </button>
+                    <button
+                      onClick={() => handleDisableMember(member)}
+                      className="p-2 text-red-500 hover:bg-red-100 dark:hover:bg-white/10 rounded-lg"
+                      title="Deshabilitar Miembro"
+                    >
+                      <TrashBinIcon />
+                    </button>
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -334,6 +380,52 @@ export default function BasicTableOne() {
             </button>
           </div>
         </div>
+
+        {showDeleteModal && selectedMember && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Deshabilitar miembro
+              </h3>
+
+              <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                ¿Deseas deshabilitar a:
+              </p>
+
+              <p className="mt-2 font-medium text-gray-900 dark:text-white">
+                {selectedMember.nombres}{" "}
+                {selectedMember.apellido_paterno}{" "}
+                {selectedMember.apellido_materno}
+              </p>
+
+              <p className="mt-3 text-sm text-red-600">
+                Esta acción cambiará la cobertura a FALSE.
+              </p>
+
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setSelectedMember(null);
+                  }}
+                  className="rounded-lg border border-gray-300 px-4 py-2 text-sm"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  onClick={confirmDisableMember}
+                  disabled={toggleCoverageMutation.isPending}
+                  className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 disabled:opacity-50"
+                >
+                  {toggleCoverageMutation.isPending
+                    ? "Procesando..."
+                    : "Deshabilitar"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
