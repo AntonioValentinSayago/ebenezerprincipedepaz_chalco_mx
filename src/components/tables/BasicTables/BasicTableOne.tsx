@@ -426,6 +426,11 @@ export default function BasicTableOne() {
             </div>
           </div>
         )}
+        <button
+          onClick={() => toast.success('Hola')}
+        >
+          Deshabilitar
+        </button>
       </div>
     </div>
   );
