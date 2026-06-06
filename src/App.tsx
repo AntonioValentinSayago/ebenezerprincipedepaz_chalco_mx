@@ -18,12 +18,19 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import AppAsistencias from "./components/asistencias";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <>
       <Router>
         <ScrollToTop />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
