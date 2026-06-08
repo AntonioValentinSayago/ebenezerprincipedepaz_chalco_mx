@@ -41,14 +41,14 @@ const navItems: NavItem[] = [
     path: "/calendar",
   },
   {
+    icon: <ListIcon />,
+    name: "Registro de Nueva Cobertura",
+    path: "/form-elements",
+  },
+  {
     icon: <UserCircleIcon />,
     name: "User Profile",
     path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
   },
   {
     name: "Pages",

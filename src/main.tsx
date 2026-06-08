@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <AppWrapper>
           <App />
           <Toaster
-            position="bottom-center"
+            position="top-center"
             reverseOrder={false}
             toastOptions={{
               duration: 4000,

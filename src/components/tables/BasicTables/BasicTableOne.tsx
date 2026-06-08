@@ -139,7 +139,7 @@ export default function BasicTableOne() {
         {/* Bloque Herramientas */}
         <div className="flex flex-wrap items-center gap-3 m-5">
           {/* Buscador */}
-          <div className="relative min-w-[200px] flex-1 sm:flex-initial">
+          <div className="relative min-w-[300px] flex-1 sm:flex-initial">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg
                 className="w-4 h-4 text-gray-400"
@@ -210,7 +210,7 @@ export default function BasicTableOne() {
               />
             </svg>
             EXCEL
-          </button>
+          </button>          
         </div>
 
         <Table>
