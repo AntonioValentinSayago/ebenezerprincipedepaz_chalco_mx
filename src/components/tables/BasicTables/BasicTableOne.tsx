@@ -7,6 +7,7 @@ import Alert from "../../ui/alert/Alert";
 import { BoxIconLine, TrashBinIcon } from "../../../icons";
 import { Member } from "../../../types/UserEbenzer";
 import toast from "react-hot-toast";
+import { EyeIcon } from "lucide-react";
 
 export default function BasicTableOne() {
   const [search, setSearch] = useState("");
@@ -345,7 +346,7 @@ export default function BasicTableOne() {
                 <TableCell className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <button className="p-2 text-blue-500 hover:bg-blue-100 dark:hover:bg-white/10 rounded-lg">
-                      <BoxIconLine />
+                      <EyeIcon />
                     </button>
                     <button
                       onClick={() => handleDisableMember(member)}
