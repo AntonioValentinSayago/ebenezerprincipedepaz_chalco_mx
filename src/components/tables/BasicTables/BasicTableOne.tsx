@@ -4,7 +4,7 @@ import { getUserEbenezer, updateUserEbenezer } from "../../../api/DevEbenezerApi
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../ui/table";
 import Badge from "../../ui/badge/Badge";
 import Alert from "../../ui/alert/Alert";
-import { BoxIconLine, TrashBinIcon } from "../../../icons";
+import { TrashBinIcon } from "../../../icons";
 import { Member } from "../../../types/UserEbenzer";
 import toast from "react-hot-toast";
 import { EyeIcon } from "lucide-react";
