@@ -9,6 +9,8 @@ import { Member } from "../../../types/UserEbenzer";
 import toast from "react-hot-toast";
 import { EyeIcon } from "lucide-react";
 
+
+
 export default function BasicTableOne() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +20,7 @@ export default function BasicTableOne() {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
   const queryClient = useQueryClient();
+  
 
   const recordsPerPage = 10;
 
@@ -250,12 +253,6 @@ export default function BasicTableOne() {
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
               >
-                Cobertura
-              </TableCell>
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs"
-              >
                 Acciones
               </TableCell>
             </TableRow>
@@ -330,16 +327,6 @@ export default function BasicTableOne() {
                       </span>
                     ))}
                   </div>
-                </TableCell>
-
-                {/* Cobertura */}
-                <TableCell className="px-4 py-3">
-                  <Badge
-                    size="sm"
-                    color={member.cobertura ? "success" : "warning"}
-                  >
-                    {member.cobertura ? "Activa" : "No"}
-                  </Badge>
                 </TableCell>
 
                 {/* Acciones */}
@@ -424,7 +411,7 @@ export default function BasicTableOne() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
             <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Deshabilitar miembro
+                ⚠️ Deshabilitar miembro
               </h3>
 
               <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
@@ -438,7 +425,7 @@ export default function BasicTableOne() {
               </p>
 
               <p className="mt-3 text-sm text-red-600">
-                Esta acción cambiará la cobertura a FALSE.
+                Esta acción eliminara la cobertura temporal.
               </p>
 
               <div className="mt-6 flex justify-end gap-3">
@@ -459,7 +446,7 @@ export default function BasicTableOne() {
                 >
                   {toggleCoverageMutation.isPending
                     ? "Procesando..."
-                    : "Deshabilitar"}
+                    : "Si, Deshabilitar"}
                 </button>
               </div>
             </div>
