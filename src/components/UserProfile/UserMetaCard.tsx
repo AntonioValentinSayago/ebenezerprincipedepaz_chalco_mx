@@ -38,19 +38,20 @@ export interface Member {
 }
 
 interface MemberProfileDashboardProps {
-  member: Member;
+  memberData: Member;
   onEdit?: () => void;
 }
 
 export default function MemberProfileDashboard({
-  member,
+  memberData,
   onEdit,
 }: MemberProfileDashboardProps) {
-  const fullName = `${member.nombres} ${member.apellido_paterno} ${member.apellido_materno}`;
+  const fullName = `${memberData.nombres} ${memberData.apellido_paterno} ${memberData.apellido_materno}`;
 
-  const initials = `${member.nombres?.[0] ?? ""}${member.apellido_paterno?.[0] ?? ""
+  const initials = `${memberData.nombres?.[0] ?? ""}${memberData.apellido_paterno?.[0] ?? ""
     }`;
 
+    console.log("memberData:", memberData.telefono);
   const isEmptyValue = (value?: string) => {
     if (!value) return true;
 
@@ -90,35 +91,35 @@ export default function MemberProfileDashboard({
                 <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-500">
                   <div className="flex items-center gap-2">
                     <Mail size={16} />
-                    {member.correo}
+                    {memberData.correo}
                   </div>
 
                   <div className="flex items-center gap-2">
                     <Phone size={16} />
-                    {member.telefono}
+                    {memberData.telefono}
                   </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${member.cobertura
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${memberData.cobertura
                         ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
                         : "bg-rose-50 text-rose-700 ring-1 ring-rose-200"
                       }`}
                   >
                     <Shield size={14} className="mr-1" />
-                    {member.cobertura
+                    {memberData.cobertura
                       ? "Bajo Cobertura"
                       : "Sin Cobertura"}
                   </span>
 
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${member.bautizado
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${memberData.bautizado
                         ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200"
                         : "bg-slate-100 text-slate-600 ring-1 ring-slate-200"
                       }`}
                   >
-                    {member.bautizado
+                    {memberData.bautizado
                       ? "Bautizado"
                       : "No Bautizado"}
                   </span>
@@ -148,40 +149,40 @@ export default function MemberProfileDashboard({
             </div>
 
             <div className="space-y-4">
-              <InfoRow label="Edad" value={`${member.edad} años`} />
+              <InfoRow label="Edad" value={`${memberData.edad} años`} />
 
-              <InfoRow label="Género" value={member.genero} />
+              <InfoRow label="Género" value={memberData.genero} />
 
               <InfoRow
                 label="Estado Civil"
-                value={member.estado_civil}
+                value={memberData.estado_civil}
               />
 
               <InfoRow
                 label="Fecha Nacimiento"
-                value={formatDate(member.fecha_nacimiento)}
+                value={formatDate(memberData.fecha_nacimiento)}
               />
 
               <InfoRow
                 label="Nivel Académico"
-                value={member.nivel_academico}
+                value={memberData.nivel_academico}
               />
 
               <InfoRow
                 label="Ocupación"
-                value={member.ocupacion}
+                value={memberData.ocupacion}
               />
 
               <InfoRow
                 label="CURP"
-                value={member.curp || "No registrada"}
-                muted={!member.curp}
+                value={memberData.curp || "No registrada"}
+                muted={!memberData.curp}
               />
 
               <InfoRow
                 label="Tipo de Sangre"
-                value={member.tipo_sangre || "No registrado"}
-                muted={!member.tipo_sangre}
+                value={memberData.tipo_sangre || "No registrado"}
+                muted={!memberData.tipo_sangre}
               />
             </div>
           </div>
@@ -198,12 +199,12 @@ export default function MemberProfileDashboard({
             <div className="space-y-4">
               <InfoRow
                 label="Fecha de Conversión"
-                value={formatDate(member.fecha_conversion)}
+                value={formatDate(memberData.fecha_conversion)}
               />
 
               <InfoRow
                 label="Bautizado"
-                value={member.bautizado ? "Sí" : "No"}
+                value={memberData.bautizado ? "Sí" : "No"}
               />
 
               <div>
@@ -211,11 +212,11 @@ export default function MemberProfileDashboard({
                   Iglesia Anterior
                 </p>
 
-                {isEmptyValue(member.iglesia_anterior) ? (
+                {isEmptyValue(memberData.iglesia_anterior) ? (
                   <EmptyState text="Sin iglesia anterior registrada" />
                 ) : (
                   <p className="font-medium text-slate-800">
-                    {member.iglesia_anterior}
+                    {memberData.iglesia_anterior}
                   </p>
                 )}
               </div>
@@ -225,11 +226,11 @@ export default function MemberProfileDashboard({
                   Razón de Salida
                 </p>
 
-                {isEmptyValue(member.razon_salida) ? (
+                {isEmptyValue(memberData.razon_salida) ? (
                   <EmptyState text="No aplica" />
                 ) : (
                   <p className="font-medium text-slate-800">
-                    {member.razon_salida}
+                    {memberData.razon_salida}
                   </p>
                 )}
               </div>
@@ -246,7 +247,7 @@ export default function MemberProfileDashboard({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {member.talentos_json.map((talent) => (
+              {memberData.talentos_json.map((talent) => (
                 <span
                   key={talent}
                   className="inline-flex items-center rounded-md bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-700"
@@ -267,7 +268,7 @@ export default function MemberProfileDashboard({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {member.ministerios_json.map((ministerio) => (
+              {memberData.ministerios_json.map((ministerio) => (
                 <span
                   key={ministerio}
                   className="inline-flex items-center rounded-md bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700"
@@ -291,7 +292,7 @@ export default function MemberProfileDashboard({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {member.cursos.map((curso) => (
+              {memberData.cursos.map((curso) => (
                 <span
                   key={curso}
                   className="inline-flex items-center rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-700"
@@ -318,7 +319,7 @@ export default function MemberProfileDashboard({
             <p className="mt-4 text-sm text-slate-600">
               Miembro registrado el{" "}
               <span className="font-medium text-slate-900">
-                {formatDate(member.created_at)}
+                {formatDate(memberData.created_at)}
               </span>
             </p>
           </div>

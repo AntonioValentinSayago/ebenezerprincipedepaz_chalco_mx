@@ -1,4 +1,4 @@
-export type UsuarioAPI = {
+export type UsuarioAPI<T> = {
     id: number;
     nombres: string;
     apellido_paterno: string;
@@ -22,6 +22,7 @@ export type UsuarioAPI = {
     created_at: string; // Formato ISO Date string
     ministerios_json: string[];
     cobertura: boolean;
+    data: T; // Se agrega la propiedad data de tipo genérico T
 };
 
 export interface Member {

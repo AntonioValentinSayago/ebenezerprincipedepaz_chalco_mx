@@ -8,12 +8,14 @@ import { TrashBinIcon } from "../../../icons";
 import { Member } from "../../../types/UserEbenzer";
 import toast from "react-hot-toast";
 import { EyeIcon } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function BasicTableOne() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const navigate = useNavigate();
 
   // Configruacion de la Modal de Confirmación
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -30,6 +32,7 @@ export default function BasicTableOne() {
     retry: 1,
     refetchOnWindowFocus: false,
   });
+  
 
   // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
   const members: Member[] = (data as any)?.data || [];
@@ -332,9 +335,12 @@ export default function BasicTableOne() {
                 {/* Acciones */}
                 <TableCell className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <button className="p-2 text-blue-500 hover:bg-blue-100 dark:hover:bg-white/10 rounded-lg">
+                    <button
+                      onClick={() => navigate(`/profile/${member.id}`)} 
+                      className="p-2 text-blue-500 hover:bg-blue-100 dark:hover:bg-white/10 rounded-lg">
                       <EyeIcon />
                     </button>
+
                     <button
                       onClick={() => handleDisableMember(member)}
                       className="p-2 text-red-500 hover:bg-red-100 dark:hover:bg-white/10 rounded-lg"
