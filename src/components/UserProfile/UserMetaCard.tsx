@@ -11,6 +11,9 @@ import {
   Shield,
 } from "lucide-react";
 
+import { useState } from "react";
+import EditMemberModal from "./EditMemberModal";
+
 export interface Member {
   id: number;
   nombres: string;
@@ -44,14 +47,13 @@ interface MemberProfileDashboardProps {
 
 export default function MemberProfileDashboard({
   memberData,
-  onEdit,
 }: MemberProfileDashboardProps) {
   const fullName = `${memberData.nombres} ${memberData.apellido_paterno} ${memberData.apellido_materno}`;
 
-  const initials = `${memberData.nombres?.[0] ?? ""}${memberData.apellido_paterno?.[0] ?? ""
-    }`;
+  const initials = `${memberData.nombres?.[0] ?? ""}${
+    memberData.apellido_paterno?.[0] ?? ""
+  }`;
 
-    console.log("memberData:", memberData.telefono);
   const isEmptyValue = (value?: string) => {
     if (!value) return true;
 
@@ -72,6 +74,8 @@ export default function MemberProfileDashboard({
     }).format(new Date(date));
   };
 
+  const [openEditModal, setOpenEditModal] = useState(false);
+
   return (
     <div className="min-h-screen bg-transparent  p-4 md:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -91,44 +95,46 @@ export default function MemberProfileDashboard({
                 <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-500 dark:text-white/90">
                   <div className="flex items-center gap-2">
                     <Mail size={16} />
-                    {memberData.correo?.trim()  ? memberData.correo : "Correo no disponible"}
+                    {memberData.correo?.trim()
+                      ? memberData.correo
+                      : "Correo no disponible"}
                   </div>
 
                   <div className="flex items-center gap-2">
                     <Phone size={16} />
-                    {memberData.telefono?.trim() ? memberData.telefono : "Teléfono no disponible"}
+                    {memberData.telefono?.trim()
+                      ? memberData.telefono
+                      : "Teléfono no disponible"}
                   </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${memberData.cobertura
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${
+                      memberData.cobertura
                         ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
                         : "bg-rose-50 text-rose-700 ring-1 ring-rose-200"
-                      }`}
+                    }`}
                   >
                     <Shield size={14} className="mr-1" />
-                    {memberData.cobertura
-                      ? "Bajo Cobertura"
-                      : "Sin Cobertura"}
+                    {memberData.cobertura ? "Bajo Cobertura" : "Sin Cobertura"}
                   </span>
 
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${memberData.bautizado
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${
+                      memberData.bautizado
                         ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200"
                         : "bg-slate-100 text-slate-600 ring-1 ring-slate-200"
-                      }`}
+                    }`}
                   >
-                    {memberData.bautizado
-                      ? "Bautizado"
-                      : "No Bautizado"}
+                    {memberData.bautizado ? "Bautizado" : "No Bautizado"}
                   </span>
                 </div>
               </div>
             </div>
 
             <button
-              onClick={onEdit}
+              onClick={() => setOpenEditModal(true)}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
             >
               <Edit3 size={16} />
@@ -142,7 +148,10 @@ export default function MemberProfileDashboard({
           {/* INFORMACIÓN PERSONAL */}
           <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <User className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <User
+                className="text-indigo-600 dark:text-emerald-700/90"
+                size={20}
+              />
               <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Información Personal
               </h2>
@@ -152,10 +161,7 @@ export default function MemberProfileDashboard({
               <InfoRow label="Edad" value={`${memberData.edad} años`} />
               <InfoRow label="Género" value={memberData.genero} />
 
-              <InfoRow
-                label="Estado Civil"
-                value={memberData.estado_civil}
-              />
+              <InfoRow label="Estado Civil" value={memberData.estado_civil} />
 
               <InfoRow
                 label="Fecha Nacimiento"
@@ -167,10 +173,7 @@ export default function MemberProfileDashboard({
                 value={memberData.nivel_academico}
               />
 
-              <InfoRow
-                label="Ocupación"
-                value={memberData.ocupacion}
-              />
+              <InfoRow label="Ocupación" value={memberData.ocupacion} />
 
               <InfoRow
                 label="CURP"
@@ -189,7 +192,10 @@ export default function MemberProfileDashboard({
           {/* INFORMACIÓN ECLESIÁSTICA */}
           <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <Church className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <Church
+                className="text-indigo-600 dark:text-emerald-700/90"
+                size={20}
+              />
               <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Información Eclesiástica
               </h2>
@@ -239,7 +245,10 @@ export default function MemberProfileDashboard({
           {/* TALENTOS */}
           <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <Sparkles className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <Sparkles
+                className="text-indigo-600 dark:text-emerald-700/90"
+                size={20}
+              />
               <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Talentos y Habilidades
               </h2>
@@ -260,7 +269,10 @@ export default function MemberProfileDashboard({
           {/* MINISTERIOS */}
           <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-6">
             <div className="mb-5 flex items-center gap-2">
-              <Heart className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <Heart
+                className="text-indigo-600 dark:text-emerald-700/90"
+                size={20}
+              />
               <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Ministerios Activos
               </h2>
@@ -318,12 +330,18 @@ export default function MemberProfileDashboard({
             <p className="mt-4 text-sm text-slate-600 dark:text-white/50">
               Miembro registrado el{" "}
               <span className="font-medium text-slate-900 dark:text-white/90">
-                {formatDate(memberData.created_at)} 
+                {formatDate(memberData.created_at)}
               </span>
             </p>
           </div>
         </div>
       </div>
+      <EditMemberModal
+        isOpen={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        member={memberData}
+      />
+      ;
     </div>
   );
 }
@@ -334,11 +352,7 @@ interface InfoRowProps {
   muted?: boolean;
 }
 
-function InfoRow({
-  label,
-  value,
-  muted = false,
-}: InfoRowProps) {
+function InfoRow({ label, value, muted = false }: InfoRowProps) {
   return (
     <div>
       <p className="mb-1 text-xs uppercase tracking-wide text-slate-400 dark:text-white/90 dark:font-extrabold">
@@ -346,8 +360,9 @@ function InfoRow({
       </p>
 
       <p
-        className={`font-medium ${muted ? "text-slate-400" : "text-slate-800 dark:text-slate-300/50"
-          }`}
+        className={`font-medium ${
+          muted ? "text-slate-400" : "text-slate-800 dark:text-slate-300/50"
+        }`}
       >
         {value}
       </p>

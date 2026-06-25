@@ -15,7 +15,7 @@ export default function UserProfiles() {
     isLoading,
     isError,
     error,
-  } = useQuery<any, Error>({
+  } = useQuery({
     queryKey: ["member", memberId],
     queryFn: () => getUserEbenezerById(memberId),
     retry: 1,

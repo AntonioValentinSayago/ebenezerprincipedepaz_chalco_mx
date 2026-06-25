@@ -1,10 +1,10 @@
 import { isAxiosError } from "axios";
 import api from "../config/axios";
-import { CreateMemberRequest, UsuarioAPI } from "../types/UserEbenzer";
+import { ApiResponse, CreateMemberRequest, Usuario } from "../types/UserEbenzer";
 
 export async function getUserEbenezer() {
     try {
-        const { data } = await api.get<UsuarioAPI<unknown>>('/ebenezer')
+        const { data } = await api.get<ApiResponse<Usuario>>('/ebenezer')
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -15,7 +15,7 @@ export async function getUserEbenezer() {
 
 export async function updateUserEbenezer(memberId: number) {
     try {
-        const { data } = await api.patch<UsuarioAPI<unknown>>(`/ebenezer/member/${memberId}/toggle-coverage`)
+        const { data } = await api.patch<ApiResponse<Usuario>>(`/ebenezer/member/${memberId}/toggle-coverage`)
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -26,7 +26,7 @@ export async function updateUserEbenezer(memberId: number) {
 
 export async function getUserEbenezerById(memberId: number) {
     try {
-        const { data } = await api.get<UsuarioAPI<unknown>>(`/ebenezer/member/${memberId}`)
+        const { data } = await api.get<ApiResponse<Usuario>>(`/ebenezer/member/${memberId}`)
         return data.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
