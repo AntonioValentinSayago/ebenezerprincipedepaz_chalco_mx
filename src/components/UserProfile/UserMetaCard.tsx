@@ -73,30 +73,30 @@ export default function MemberProfileDashboard({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-transparent  p-4 md:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* HEADER */}
-        <div className="rounded-3xl border border-slate-200/60 bg-white shadow-sm">
+        <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-sm">
           <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-5">
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-500 text-2xl font-bold text-white shadow-sm">
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-500 text-2xl font-bold text-white dark:text-white/90 shadow-sm">
                 {initials}
               </div>
 
               <div>
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white/90 md:text-3xl">
                   {fullName}
                 </h1>
 
-                <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-500">
+                <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-500 dark:text-white/90">
                   <div className="flex items-center gap-2">
                     <Mail size={16} />
-                    {memberData.correo}
+                    {memberData.correo?.trim()  ? memberData.correo : "Correo no disponible"}
                   </div>
 
                   <div className="flex items-center gap-2">
                     <Phone size={16} />
-                    {memberData.telefono}
+                    {memberData.telefono?.trim() ? memberData.telefono : "Teléfono no disponible"}
                   </div>
                 </div>
 
@@ -140,17 +140,16 @@ export default function MemberProfileDashboard({
         {/* BENTO GRID */}
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
           {/* INFORMACIÓN PERSONAL */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-4">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <User className="text-indigo-600" size={20} />
-              <h2 className="text-lg font-semibold text-slate-900">
+              <User className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Información Personal
               </h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 dark:text-white/90">
               <InfoRow label="Edad" value={`${memberData.edad} años`} />
-
               <InfoRow label="Género" value={memberData.genero} />
 
               <InfoRow
@@ -188,15 +187,15 @@ export default function MemberProfileDashboard({
           </div>
 
           {/* INFORMACIÓN ECLESIÁSTICA */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-4">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <Church className="text-indigo-600" size={20} />
-              <h2 className="text-lg font-semibold text-slate-900">
+              <Church className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Información Eclesiástica
               </h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 dark:text-white/90">
               <InfoRow
                 label="Fecha de Conversión"
                 value={formatDate(memberData.fecha_conversion)}
@@ -215,7 +214,7 @@ export default function MemberProfileDashboard({
                 {isEmptyValue(memberData.iglesia_anterior) ? (
                   <EmptyState text="Sin iglesia anterior registrada" />
                 ) : (
-                  <p className="font-medium text-slate-800">
+                  <p className="font-medium text-slate-800 dark:text-white/90">
                     {memberData.iglesia_anterior}
                   </p>
                 )}
@@ -229,7 +228,7 @@ export default function MemberProfileDashboard({
                 {isEmptyValue(memberData.razon_salida) ? (
                   <EmptyState text="No aplica" />
                 ) : (
-                  <p className="font-medium text-slate-800">
+                  <p className="font-medium text-slate-800 dark:text-white/90">
                     {memberData.razon_salida}
                   </p>
                 )}
@@ -238,15 +237,15 @@ export default function MemberProfileDashboard({
           </div>
 
           {/* TALENTOS */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-4">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-4">
             <div className="mb-5 flex items-center gap-2">
-              <Sparkles className="text-indigo-600" size={20} />
-              <h2 className="text-lg font-semibold text-slate-900">
+              <Sparkles className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Talentos y Habilidades
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 ">
               {memberData.talentos_json.map((talent) => (
                 <span
                   key={talent}
@@ -259,10 +258,10 @@ export default function MemberProfileDashboard({
           </div>
 
           {/* MINISTERIOS */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-6">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-6">
             <div className="mb-5 flex items-center gap-2">
-              <Heart className="text-indigo-600" size={20} />
-              <h2 className="text-lg font-semibold text-slate-900">
+              <Heart className="text-indigo-600 dark:text-emerald-700/90" size={20} />
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Ministerios Activos
               </h2>
             </div>
@@ -280,13 +279,13 @@ export default function MemberProfileDashboard({
           </div>
 
           {/* CURSOS */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-6">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-6">
             <div className="mb-5 flex items-center gap-2">
               <GraduationCap
-                className="text-indigo-600"
+                className="text-indigo-600 dark:text-emerald-700/90"
                 size={20}
               />
-              <h2 className="text-lg font-semibold text-slate-900">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Cursos Completados
               </h2>
             </div>
@@ -304,22 +303,22 @@ export default function MemberProfileDashboard({
           </div>
 
           {/* INFORMACIÓN DEL SISTEMA */}
-          <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm xl:col-span-12">
+          <div className="rounded-3xl border border-slate-200/60 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm xl:col-span-12">
             <div className="flex items-center gap-2">
               <Calendar
-                className="text-indigo-600"
+                className="text-indigo-600 dark:text-emerald-700/90"
                 size={20}
               />
 
-              <h2 className="text-lg font-semibold text-slate-900">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white/90">
                 Información de Registro
               </h2>
             </div>
 
-            <p className="mt-4 text-sm text-slate-600">
+            <p className="mt-4 text-sm text-slate-600 dark:text-white/50">
               Miembro registrado el{" "}
-              <span className="font-medium text-slate-900">
-                {formatDate(memberData.created_at)}
+              <span className="font-medium text-slate-900 dark:text-white/90">
+                {formatDate(memberData.created_at)} 
               </span>
             </p>
           </div>
@@ -342,12 +341,12 @@ function InfoRow({
 }: InfoRowProps) {
   return (
     <div>
-      <p className="mb-1 text-xs uppercase tracking-wide text-slate-400">
+      <p className="mb-1 text-xs uppercase tracking-wide text-slate-400 dark:text-white/90 dark:font-extrabold">
         {label}
       </p>
 
       <p
-        className={`font-medium ${muted ? "text-slate-400" : "text-slate-800"
+        className={`font-medium ${muted ? "text-slate-400" : "text-slate-800 dark:text-slate-300/50"
           }`}
       >
         {value}
@@ -358,7 +357,7 @@ function InfoRow({
 
 function EmptyState({ text }: { text: string }) {
   return (
-    <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+    <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-white/90">
       {text}
     </div>
   );
