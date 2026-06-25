@@ -33,11 +33,10 @@ export default function BasicTableOne() {
     refetchOnWindowFocus: false,
   });
   
-
   // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
   const members: Member[] = (data as any)?.data || [];
 
-  // Función para eliminar miembro
+  // Función para Inahabilitar miembro
   const toggleCoverageMutation = useMutation({
     mutationFn: (memberId: number) => updateUserEbenezer(memberId),
     onSuccess: () => {
@@ -414,14 +413,14 @@ export default function BasicTableOne() {
         </div>
 
         {showDeleteModal && selectedMember && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="fixed inset-0 z-900 flex items-center justify-center bg-black/50">
             <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                ⚠️ Deshabilitar miembro
+                {selectedMember.cobertura ? "⚠️ Deshabilitar Cobertura  " : "⚠️ Activar Cobertura"}
               </h3>
 
               <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                ¿Deseas deshabilitar a:
+                
               </p>
 
               <p className="mt-2 font-medium text-gray-900 dark:text-white">
@@ -430,8 +429,8 @@ export default function BasicTableOne() {
                 {selectedMember.apellido_materno}
               </p>
 
-              <p className="mt-3 text-sm text-red-600">
-                Esta acción eliminara la cobertura temporal.
+              <p className="mt-3 text-sm text-red-600 font-medium dark:text-red-400">
+                Esta acción {selectedMember.cobertura ? "Eliminara " : "Activara"} la cobertura y sus beneficios asociados.
               </p>
 
               <div className="mt-6 flex justify-end gap-3">
@@ -452,7 +451,7 @@ export default function BasicTableOne() {
                 >
                   {toggleCoverageMutation.isPending
                     ? "Procesando..."
-                    : "Si, Deshabilitar"}
+                    : `Si, ${selectedMember.cobertura ? "Deshabilitar" : "Activar"}`}
                 </button>
               </div>
             </div>
