@@ -94,7 +94,7 @@ export default function BasicTableOne() {
   if (isLoading) return (
     <Alert
       variant="info"
-      title="Cargando datos..."
+      title="Cargando Información de los miembros..."
       message="Esto puede demorar un momento."
       showLink={false}
     />
@@ -105,7 +105,7 @@ export default function BasicTableOne() {
       <Alert
         variant="error"
         title="Error Message"
-        message="Be cautious when performing this action."
+        message="Error Inesperado, Intentalo de nuevo más tarde."
         showLink={false}
       />
     );
@@ -177,7 +177,7 @@ export default function BasicTableOne() {
           {/* PDF */}
           <button
             onClick={() => toast.error('No se ha implementado la función de descarga.')}
-            title="Descargar PDF"
+            title="Descargar Informe en PDF"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
           >
             <svg
@@ -199,7 +199,7 @@ export default function BasicTableOne() {
           {/* Excel */}
           <button
             onClick={() => toast.error('No se ha implementado la función de descarga.')}
-            title="Descargar Excel"
+            title="Descargar Informe Excel"
             className="inline-flex items-center justify-center p-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-green-500/10 dark:text-green-400 dark:hover:bg-green-500/20"
           >
             <svg
